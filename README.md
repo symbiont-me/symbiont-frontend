@@ -31,47 +31,53 @@ Works with various Large Language Models from industry leaders such as Anthropic
 
 ## Branches 🌿
 
-- **`main`**: Stable branch, uses hosted services like Pinecone for vectors and Firebase for database and storage.
-- **`dev`**: Includes the latest features, fully functional with a self-hosted MongoDB for enhanced privacy, still uses Pinecone for vectors.
-- **`vector-db`**: Focuses on integrating various vector databases, both self-hosted and cloud-based, for ultimate privacy and control.
+- **`main`**: Stable branch, uses hosted services like Pinecone for vectors and Firebase for database and storage. This is what gets deployed in production
+- **`dev`**: Includes the latest features, fully functional with a self-hosted MongoDB for enhanced privacy, still uses Pinecone for vectors. This is deployed in staging.
 
 ## Setup
 
-To run the development server directly:
-
-- .env.local or .env.development must be present
-
+## Development
+### Source
+#### Installing dependencies
+You need NodeJS and pnpm to build and run the app from source.
+Install dependencies:
+```bash
+pnpm install
+```
+#### Running the app
+To run the development server directly, you need to prepare a `env.local` or `.env.development` file.
+See `.env.example` for help.
+To start the app:
 ```bash
 pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
+### Docker
 To use Docker:
-
 - .env.development must be present
-
 ```bash
-ENV=development docker-compose up # for development
-ENV=production docker-compose up # for production
+docker-compose --profile dev up
 ```
-
 See .env.example for required environment variables
 
----
+## Production
+NOTE: Currently there is a bug in the production workflow. We need to modify the auth workflow to allow the frontend to compile pages without needing to authenticate.
+### Source
+#### Installing dependencies
+You need NodeJS and pnpm to build and run the app from source.
+Install dependencies:
+```bash
+pnpm install
+```
+#### Building and running the app
+To run the development server directly, you need to prepare a `env.local` or `.env.development` file.
+See `.env.example` for help.
+To start the app:
+```bash
+pnpm run build && pnpm run start
+```
 
-## Fair Use and Licensing 📜
-
-Symbiont is committed to providing powerful, free software tools that empower individuals, NGOs, and non-commercial entities to utilize advanced technology ethically and effectively. Our use of the Affero GPL license ensures that all derivatives of our work are also kept open and free, fostering a community of sharing and improvement.
-
-### Commercial Use
-While we encourage widespread use of Symbiont, commercial entities are expected to contribute back to the community either by participating in development or through a licensing fee. These contributions help maintain Symbiont's sustainability and ensure it remains free for non-commercial users. For more details on commercial licensing, please contact [contact info].
-
-
-## Contributions 🤝
-
-We welcome contributions from all, from code enhancements to documentation updates.
-
-Join us in our mission to make AI applications available to common users while maintaining privacy and security. 🌍🚀👩‍💻👨‍💻
-
-
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Docker
+NOTE: There is currently a bug when building the nextjs app in docker
