@@ -1,5 +1,7 @@
-# Stage 1: Build the application
-FROM node:alpine AS builder
+##############
+# Base Image #
+##############
+FROM node:20.12.1-alpine3.19 AS builder
 
 WORKDIR /app
 
@@ -7,18 +9,33 @@ COPY package.json pnpm-lock.yaml ./
 
 RUN npm install -g pnpm && pnpm install
 
-COPY . .
-
-# Stage 2: Create a smaller production image
-FROM alpine:3.14
-
-# Install Node.js
-RUN apk add --no-cache nodejs npm
+#####################
+# Development Image #
+#####################
+FROM builder AS development
 
 WORKDIR /app
 
-COPY --from=builder /app .
+COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "dev"]
+
+
+#####################
+# Production Image  #
+#####################
+# There is a bug when building the nextjs app as it fails to authenticate
+#   with firebase as it probably can't access the env file
+FROM builder AS production
+
+WORKDIR /app
+
+COPY . .
+
+RUN pnpm build
+
+EXPOSE 3000
+
+CMD ["pnpm", "start"]

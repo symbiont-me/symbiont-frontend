@@ -1,11 +1,28 @@
 version: "3.8"
+
 services:
-  nextjs-app:
-    build: .
+  nextjs-app-dev:
+    build:
+      context: .
+      target: development
     ports:
       - "3000:3000"
     volumes:
       - ./src:/app/src
     env_file:
-      - .env.${ENV}
+      - .env.development
     command: sh -c "pnpm install && pnpm dev"
+    profiles: ["dev"]
+    
+  nextjs-app-prod:
+    build:
+      context: .
+      target: production
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+    env_file:
+      - .env.production
+    command: sh -c "pnpm start"
+    profiles: ["prod"]
