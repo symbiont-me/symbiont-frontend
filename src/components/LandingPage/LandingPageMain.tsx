@@ -22,7 +22,6 @@ const LandingPageMain = () => {
       <div className="flex flex-grow flex-col">
         <div className="flex h-full flex-col md:flex-row">
           <Hero />
-          <button onClick={handleSignout}>logout</button>
         </div>
         <Divider />
         <div className="flex min-h-full w-full flex-col ">
