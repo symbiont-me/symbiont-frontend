@@ -56,6 +56,8 @@ const TextEditor = () => {
       console.log("Completion response:", data.response);
       if (data?.response) {
         setTextCompletion(data.response);
+      } else {
+        setTextCompletion("");
       }
     } catch (error) {
       console.error("Error sending completion request:", error);
