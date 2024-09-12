@@ -4,16 +4,8 @@ import FAQ from "./FAQ";
 import Footer from "../Footer";
 import { Divider } from "@mui/material";
 import "./styles.css";
-import { UserAuth } from "@/app/context/AuthContext";
 
 const LandingPageMain = () => {
-  const authContext = UserAuth();
-  function handleSignout() {
-    if (!authContext) {
-      return;
-    }
-    authContext.googleSignOut();
-  }
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
       <Navbar />
